@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     patch "profiles", to: "profiles#update"
   end
 
+  get "rooms/search", to: "rooms#search", as: :search_rooms
+
   resources :rooms
 
   get "up" => "rails/health#show", as: :rails_health_check

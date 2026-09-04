@@ -5,6 +5,19 @@ class RoomsController < ApplicationController
     @rooms = current_user.rooms.order(created_at: :desc)
   end
 
+  def search
+    @rooms = Room.all
+
+    if params[:area].present?
+      @rooms = @rooms.where("address LIKE ?", "%#{params[:area]}%")
+    end
+
+    if params[:keyword].present?
+      keyword = "%#{params[:keyword]}%"
+      @rooms = @rooms.where("name LIKE ? OR description LIKE ?", keyword, keyword)
+    end
+  end
+
   def show
     @room = Room.find(params[:id])
   end
