@@ -1,0 +1,36 @@
+<h1>施設を新規登録</h1>
+
+<%= form_with model: @room, html: { multipart: true } do |f| %>
+
+  <div>
+    <%= f.label :image, "施設画像" %>
+    <%= f.file_field :image %>
+  </div>
+
+  <div>
+    <%= f.label :name, "施設名" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :description, "施設詳細" %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :price, "料金" %>
+    <%= f.number_field :price, min: 1 %>
+  </div>
+
+  <div>
+    <%= f.label :address, "住所" %>
+    <%= f.text_field :address %>
+  </div>
+
+  <div>
+    <%= f.submit "登録する" %>
+  </div>
+
+<% end %>
+
+<%= link_to "施設一覧に戻る", rooms_path %>
