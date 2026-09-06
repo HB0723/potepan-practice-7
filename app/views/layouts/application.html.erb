@@ -23,6 +23,10 @@
     <% flash.each do |type, message| %>
       <% next if ["Signed in successfully.", "Signed out successfully."].include?(message) %>
 
+      <% next if devise_controller? &&
+                controller_name == "sessions" &&
+                type.to_s == "alert" %>
+
       <p><%= message %></p>
     <% end %>
 

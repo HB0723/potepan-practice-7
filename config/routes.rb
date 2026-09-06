@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   namespace :users do
     get "account", to: "account#show", as: :account
+
+    get "profile", to: "profiles#show", as: :profile
     get "profiles/edit", to: "profiles#edit"
     patch "profiles", to: "profiles#update"
   end

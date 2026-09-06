@@ -1,6 +1,10 @@
 class Users::ProfilesController < ApplicationController
   before_action :authenticate_user!
 
+  def show
+    @user = current_user
+  end
+
   def edit
     @user = current_user
   end
@@ -9,7 +13,8 @@ class Users::ProfilesController < ApplicationController
     @user = current_user
 
     if @user.update(profile_params)
-      redirect_to users_profiles_edit_path, notice: "プロフィールを更新しました"
+      redirect_to users_profile_path,
+                  notice: "プロフィールを更新しました"
     else
       render :edit, status: :unprocessable_entity
     end

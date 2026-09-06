@@ -107,15 +107,9 @@
     <%= f.submit room.persisted? ? "保存" : "登録する",
           class: "room-form-submit" %>
 
-    <% if room.persisted? %>
-      <%= link_to "キャンセル",
-            room_path(room),
-            class: "room-form-cancel" %>
-    <% else %>
-      <%= link_to "キャンセル",
-            rooms_path,
-            class: "room-form-cancel" %>
-    <% end %>
+    <%= link_to "キャンセル",
+          rooms_path,
+          class: "room-form-cancel" %>
 
   </div>
 

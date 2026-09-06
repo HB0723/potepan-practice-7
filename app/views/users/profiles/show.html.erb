@@ -9,9 +9,9 @@
     <div class="settings-main">
 
       <div class="settings-heading">
-        <h2>アカウント</h2>
+        <h2>プロフィール</h2>
 
-        <%= link_to edit_user_registration_path,
+        <%= link_to users_profiles_edit_path,
               class: "settings-edit-link" do %>
           ✎ 編集
         <% end %>
@@ -19,21 +19,37 @@
 
       <div class="settings-info-row">
         <div class="settings-info-label">
-          メールアドレス
+          アイコン画像
         </div>
 
         <div class="settings-info-value">
-          <%= @user.email %>
+          <% if @user.icon.attached? %>
+            <%= image_tag @user.icon,
+                  class: "settings-profile-icon" %>
+          <% else %>
+            <%= image_tag "default_icon.png",
+                  class: "settings-profile-icon" %>
+          <% end %>
         </div>
       </div>
 
       <div class="settings-info-row">
         <div class="settings-info-label">
-          パスワード
+          名前
         </div>
 
         <div class="settings-info-value">
-          *********
+          <%= @user.name %>
+        </div>
+      </div>
+
+      <div class="settings-info-row">
+        <div class="settings-info-label">
+          自己紹介
+        </div>
+
+        <div class="settings-info-value">
+          <%= @user.self_introduction %>
         </div>
       </div>
 
