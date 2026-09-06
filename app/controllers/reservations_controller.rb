@@ -18,7 +18,7 @@ class ReservationsController < ApplicationController
     if @reservation.valid?
       render :confirm
     else
-      render :new, status: :unprocessable_entity
+      render "rooms/show", status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class ReservationsController < ApplicationController
     @reservation.room = @room
 
     if @reservation.save
-      redirect_to reservation_complete_path
+      redirect_to reservations_index_path, notice: "予約が完了しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,11 @@ class ReservationsController < ApplicationController
     @reservation = current_user.reservations.find(params[:id])
   end
 
-  def complete
+  def destroy
+    @reservation = current_user.reservations.find(params[:id])
+    @reservation.destroy
+
+    redirect_to reservations_index_path, notice: "予約を削除しました"
   end
 
   private

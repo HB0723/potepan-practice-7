@@ -1,0 +1,122 @@
+<%= form_with model: room,
+              html: { multipart: true },
+              class: "room-form" do |f| %>
+
+  <div class="room-form-row">
+    <div class="room-form-label">
+      <%= f.label :name, "施設名" %>
+      <span class="required-mark">*</span>
+    </div>
+
+    <div class="room-form-field">
+      <%= f.text_field :name,
+            class: "room-form-input" %>
+
+      <% room.errors.full_messages_for(:name).each do |message| %>
+        <p class="room-form-error"><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="room-form-row">
+    <div class="room-form-label">
+      <%= f.label :description, "施設詳細" %>
+      <span class="required-mark">*</span>
+    </div>
+
+    <div class="room-form-field">
+      <%= f.text_area :description,
+            rows: 6,
+            class: "room-form-textarea" %>
+
+      <% room.errors.full_messages_for(:description).each do |message| %>
+        <p class="room-form-error"><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="room-form-row">
+    <div class="room-form-label">
+      <%= f.label :price, "料金" %>
+      <span class="required-mark">*</span>
+    </div>
+
+    <div class="room-form-field">
+      <%= f.number_field :price,
+            min: 1,
+            class: "room-form-input" %>
+
+      <% room.errors.full_messages_for(:price).each do |message| %>
+        <p class="room-form-error"><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="room-form-row">
+    <div class="room-form-label">
+      <%= f.label :address, "住所" %>
+      <span class="required-mark">*</span>
+    </div>
+
+    <div class="room-form-field">
+      <%= f.text_field :address,
+            class: "room-form-input" %>
+
+      <% room.errors.full_messages_for(:address).each do |message| %>
+        <p class="room-form-error"><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <% if room.persisted? %>
+    <div class="room-form-row">
+      <div class="room-form-label">
+        現在の施設画像
+      </div>
+
+      <div class="room-form-field">
+        <% if room.image.attached? %>
+          <%= image_tag room.image,
+                class: "room-form-current-image" %>
+        <% else %>
+          <%= image_tag "default_room.png",
+                class: "room-form-current-image" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="room-form-row">
+    <div class="room-form-label">
+      <%= f.label :image, "施設画像" %>
+    </div>
+
+    <div class="room-form-field">
+      <label class="room-image-upload">
+        画像アップロード
+
+        <%= f.file_field :image,
+              accept: "image/*",
+              class: "room-image-input" %>
+      </label>
+    </div>
+  </div>
+
+  <div class="room-form-actions">
+
+    <%= f.submit room.persisted? ? "保存" : "登録する",
+          class: "room-form-submit" %>
+
+    <% if room.persisted? %>
+      <%= link_to "キャンセル",
+            room_path(room),
+            class: "room-form-cancel" %>
+    <% else %>
+      <%= link_to "キャンセル",
+            rooms_path,
+            class: "room-form-cancel" %>
+    <% end %>
+
+  </div>
+
+<% end %>

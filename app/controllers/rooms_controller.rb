@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:search, :show]
 
   def index
     @rooms = current_user.rooms.order(created_at: :desc)
@@ -20,6 +20,26 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
+
+    if user_signed_in? && params[:reservation_id].present?
+      original_reservation = current_user.reservations.find_by(
+        id: params[:reservation_id],
+        room_id: @room.id
+      )
+    end
+
+    if original_reservation
+      @reservation = Reservation.new(
+        checkin_at: original_reservation.checkin_at,
+        checkout_at: original_reservation.checkout_at,
+        guest_count: original_reservation.guest_count
+      )
+
+      @rebooking = true
+    else
+      @reservation = Reservation.new
+      @rebooking = false
+    end
   end
 
   def new

@@ -1,43 +1,7 @@
-<h1>施設を編集</h1>
+<div class="room-form-container">
 
-<%= form_with model: @room, html: { multipart: true } do |f| %>
+  <h1 class="room-form-title">施設情報の編集</h1>
 
-  <div>
-    <%= f.label :image, "施設画像" %>
+  <%= render "form", room: @room %>
 
-    <% if @room.image.attached? %>
-      <%= image_tag @room.image, width: 200, height: 150 %>
-    <% else %>
-      <%= image_tag "default_room.png", width: 200, height: 150 %>
-    <% end %>
-
-    <%= f.file_field :image %>
-  </div>
-
-  <div>
-    <%= f.label :name, "施設名" %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div>
-    <%= f.label :description, "施設詳細" %>
-    <%= f.text_area :description %>
-  </div>
-
-  <div>
-    <%= f.label :price, "料金" %>
-    <%= f.number_field :price, min: 1 %>
-  </div>
-
-  <div>
-    <%= f.label :address, "住所" %>
-    <%= f.text_field :address %>
-  </div>
-
-  <div>
-    <%= f.submit "更新する" %>
-  </div>
-
-<% end %>
-
-<%= link_to "施設詳細に戻る", room_path(@room) %>
+</div>

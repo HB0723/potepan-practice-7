@@ -21,9 +21,15 @@
     <%= render "layouts/header" %>
 
     <% flash.each do |type, message| %>
+      <% next if ["Signed in successfully.", "Signed out successfully."].include?(message) %>
+
       <p><%= message %></p>
     <% end %>
 
-    <%= yield %>
+    <main class="main-content">
+      <%= yield %>
+    </main>
+
+    <%= render "layouts/footer" %>
   </body>
 </html>

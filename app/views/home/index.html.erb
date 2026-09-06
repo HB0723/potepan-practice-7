@@ -1,0 +1,61 @@
+<div class="home-hero">
+  <div class="home-hero-content">
+    <h1>素敵な宿泊施設を見つけよう</h1>
+    <p>全国のおすすめ施設から、あなたにぴったりの宿を探せます。</p>
+
+    <div class="home-search">
+      <%= form_with url: search_rooms_path, method: :get do %>
+
+        <div class="home-search-field">
+          <%= select_tag :area,
+                options_for_select([
+                  ["エリアを選択", ""],
+                  ["東京", "東京"],
+                  ["大阪", "大阪"],
+                  ["京都", "京都"],
+                  ["札幌", "札幌"]
+                ]),
+                class: "home-search-input" %>
+        </div>
+
+        <div class="home-search-field">
+          <%= text_field_tag :keyword,
+                params[:keyword],
+                placeholder: "施設名・キーワード",
+                class: "home-search-input" %>
+        </div>
+
+        <%= submit_tag "検索する", class: "home-search-button" %>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<section class="home-section">
+  <h2>おすすめのエリア</h2>
+
+  <div class="area-cards">
+
+    <%= link_to search_rooms_path(area: "東京"), class: "area-card" do %>
+      <h3>東京</h3>
+      <p>Tokyo</p>
+    <% end %>
+
+    <%= link_to search_rooms_path(area: "大阪"), class: "area-card" do %>
+      <h3>大阪</h3>
+      <p>Osaka</p>
+    <% end %>
+
+    <%= link_to search_rooms_path(area: "京都"), class: "area-card" do %>
+      <h3>京都</h3>
+      <p>Kyoto</p>
+    <% end %>
+
+    <%= link_to search_rooms_path(area: "札幌"), class: "area-card" do %>
+      <h3>札幌</h3>
+      <p>Sapporo</p>
+    <% end %>
+
+  </div>
+</section>
