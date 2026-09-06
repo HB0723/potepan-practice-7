@@ -1,0 +1,51 @@
+<header class="site-header">
+  <div class="header-inner">
+    <div class="site-logo">
+      <span>宿泊予約アプリ</span>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="user-menu" data-controller="user-menu">
+
+        <button
+          type="button"
+          class="user-menu-button"
+          data-action="click->user-menu#toggle">
+
+          <% if current_user.icon.attached? %>
+            <%= image_tag current_user.icon, class: "header-icon" %>
+          <% else %>
+            <%= image_tag "default_icon.png", class: "header-icon" %>
+          <% end %>
+
+          <span><%= current_user.name %></span>
+          <span>▼</span>
+        </button>
+
+        <div
+          class="user-menu-dropdown"
+          data-user-menu-target="dropdown"
+          style="display: none;">
+
+          <%= link_to "施設の新規登録", new_room_path %>
+
+          <%= link_to "予約済み一覧", reservations_index_path %>
+
+          <%= link_to "登録済み一覧", rooms_path %>
+
+          <%= link_to "アカウント設定", users_account_path %>
+
+          <%= button_to "ログアウト",
+                destroy_user_session_path,
+                method: :delete %>
+        </div>
+      </div>
+
+    <% else %>
+      <div class="guest-menu">
+        <%= link_to "ログイン", new_user_session_path %>
+        <%= link_to "新規登録", new_user_registration_path %>
+      </div>
+    <% end %>
+  </div>
+</header>

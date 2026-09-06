@@ -1,15 +1,76 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+.site-header {
+  background: #1d1d43;
+  height: 70px;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-logo span {
+  color: white;
+  font-size: 30px;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  width: 180px;
+  background: white;
+  border: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.user-menu-dropdown a,
+.user-menu-dropdown form {
+  display: block;
+}
+
+.user-menu-dropdown a,
+.user-menu-dropdown button {
+  width: 100%;
+  padding: 12px 14px;
+  background: white;
+  border: none;
+  text-align: left;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.guest-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.guest-menu a {
+  color: white;
+  text-decoration: none;
+}

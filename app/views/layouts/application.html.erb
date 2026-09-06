@@ -18,6 +18,8 @@
   </head>
 
   <body>
+    <%= render "layouts/header" %>
+
     <% flash.each do |type, message| %>
       <p><%= message %></p>
     <% end %>
