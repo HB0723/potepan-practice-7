@@ -1,0 +1,43 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <h1 class="auth-title">ログイン</h1>
+
+    <%= form_for(resource,
+                 as: resource_name,
+                 url: session_path(resource_name)) do |f| %>
+
+      <div class="auth-field">
+        <%= f.label :email, "メールアドレス" %>
+
+        <%= f.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "メールアドレスを入力",
+              class: "auth-input" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :password, "パスワード" %>
+
+        <%= f.password_field :password,
+              autocomplete: "current-password",
+              placeholder: "パスワードを入力",
+              class: "auth-input" %>
+
+        <% if flash[:alert].present? %>
+          <p class="auth-error"><%= flash[:alert] %></p>
+        <% end %>
+      </div>
+
+      <%= f.submit "ログイン",
+            class: "auth-submit" %>
+
+    <% end %>
+
+    <%= link_to "新しいアカウントを作成",
+          new_user_registration_path,
+          class: "auth-secondary-button" %>
+
+  </div>
+</div>

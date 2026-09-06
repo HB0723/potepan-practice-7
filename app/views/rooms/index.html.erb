@@ -1,0 +1,126 @@
+<div class="registered-room-container">
+
+  <h1 class="registered-room-title">登録済み一覧</h1>
+
+  <div class="registered-room-table">
+
+    <div class="registered-room-header">
+      <div>画像</div>
+      <div>施設名</div>
+      <div>紹介文</div>
+      <div>料金</div>
+      <div>作成日</div>
+      <div></div>
+    </div>
+
+
+    <% @rooms.each do |room| %>
+
+      <div class="registered-room-row">
+
+        <div class="registered-room-image">
+          <% if room.image.attached? %>
+            <%= image_tag room.image %>
+          <% else %>
+            <%= image_tag "default_room.png" %>
+          <% end %>
+        </div>
+
+        <div class="registered-room-name">
+          <%= link_to room.name, room_path(room) %>
+        </div>
+
+        <div class="registered-room-description">
+          <%= truncate(room.description, length: 80) %>
+        </div>
+
+        <div class="registered-room-price">
+          ¥<%= number_with_delimiter(room.price) %>〜
+        </div>
+
+        <div class="registered-room-date">
+          <%= room.created_at.strftime("%Y/%m/%d") %>
+        </div>
+
+        <div
+          class="registered-room-action"
+          data-controller="room-menu delete-modal">
+
+          <button
+            type="button"
+            class="registered-room-menu-button"
+            data-action="click->room-menu#toggle">
+            ⋮
+          </button>
+
+
+          <div
+            class="registered-room-menu-dropdown"
+            data-room-menu-target="menu"
+            style="display: none;">
+
+            <%= link_to "編集", edit_room_path(room) %>
+
+            <button
+              type="button"
+              class="registered-room-delete-link"
+              data-action="click->delete-modal#open">
+              施設を削除
+            </button>
+
+          </div>
+
+          <div
+            class="delete-modal"
+            data-delete-modal-target="modal"
+            style="display: none;">
+
+            <div class="delete-modal-content">
+
+              <h2>施設を削除しますか？</h2>
+
+              <% if room.image.attached? %>
+                <%= image_tag room.image,
+                      class: "delete-modal-image" %>
+              <% else %>
+                <%= image_tag "default_room.png",
+                      class: "delete-modal-image" %>
+              <% end %>
+
+              <h3><%= room.name %></h3>
+
+              <p>
+                住所：<%= room.address %>
+              </p>
+
+              <p>
+                料金：¥<%= number_with_delimiter(room.price) %>〜
+              </p>
+
+              <div class="delete-modal-actions">
+
+                <%= button_to "施設を削除",
+                      room_path(room),
+                      method: :delete,
+                      class: "delete-confirm-button" %>
+
+                <button
+                  type="button"
+                  class="delete-cancel-button"
+                  data-action="click->delete-modal#close">
+                  キャンセル
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

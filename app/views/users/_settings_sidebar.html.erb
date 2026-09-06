@@ -1,0 +1,9 @@
+<div class="settings-sidebar">
+  <%= link_to "アカウント",
+        users_account_path,
+        class: "settings-sidebar-link #{'active' if current_page?(users_account_path) || current_page?(edit_user_registration_path)}" %>
+
+  <%= link_to "プロフィール",
+        users_profile_path,
+        class: "settings-sidebar-link #{'active' if current_page?(users_profile_path) || current_page?(users_profiles_edit_path)}" %>
+</div>

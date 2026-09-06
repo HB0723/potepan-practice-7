@@ -1,0 +1,108 @@
+<div class="settings-container">
+
+  <h1 class="settings-page-title">設定</h1>
+
+  <div class="settings-layout">
+
+    <%= render "users/settings_sidebar" %>
+
+    <div class="settings-main">
+
+      <div class="settings-heading">
+        <h2>アカウント</h2>
+      </div>
+
+      <%= form_for(resource,
+                   as: resource_name,
+                   url: registration_path(resource_name),
+                   html: {
+                     method: :put,
+                     class: "settings-form"
+                   }) do |f| %>
+
+
+        <div class="settings-form-row">
+          <%= f.label :email,
+                "メールアドレス",
+                class: "settings-form-label" %>
+
+          <div>
+            <%= f.email_field :email,
+              autocomplete: "email",
+              class: "settings-form-input" %>
+
+            <% resource.errors.full_messages_for(:email).each do |message| %>
+              <p class="settings-form-error"><%= message %></p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="settings-form-row">
+          <div class="settings-form-label">
+            <%= f.label :password, "変更後パスワード" %>
+            <small>※変更する場合のみ</small>
+          </div>
+
+          <div>
+            <%= f.password_field :password,
+                  autocomplete: "new-password",
+                  placeholder: "変更後パスワードを入力",
+                  class: "settings-form-input" %>
+
+            <% resource.errors.full_messages_for(:password).each do |message| %>
+              <p class="settings-form-error"><%= message %></p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="settings-form-row">
+          <div class="settings-form-label">
+            <%= f.label :password_confirmation, "確認用パスワード" %>
+            <small>※変更する場合のみ</small>
+          </div>
+
+          <div>
+            <%= f.password_field :password_confirmation,
+                  autocomplete: "new-password",
+                  placeholder: "変更後パスワードを入力",
+                  class: "settings-form-input" %>
+
+            <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+              <p class="settings-form-error"><%= message %></p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="settings-form-row">
+          <%= f.label :current_password,
+                "現在のパスワード",
+                class: "settings-form-label" %>
+
+          <div>
+            <%= f.password_field :current_password,
+                  autocomplete: "current-password",
+                  placeholder: "現在のパスワードを入力",
+                  class: "settings-form-input" %>
+
+            <% resource.errors.full_messages_for(:current_password).each do |message| %>
+              <p class="settings-form-error"><%= message %></p>
+            <% end %>
+          </div>
+        </div>
+
+
+        <div class="settings-form-actions">
+          <%= link_to "キャンセル",
+                users_account_path,
+                class: "settings-cancel-button" %>
+
+          <%= f.submit "保存",
+                class: "settings-save-button" %>
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

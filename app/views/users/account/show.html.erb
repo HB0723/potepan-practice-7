@@ -1,0 +1,43 @@
+<div class="settings-container">
+
+  <h1 class="settings-page-title">設定</h1>
+
+  <div class="settings-layout">
+
+    <%= render "users/settings_sidebar" %>
+
+    <div class="settings-main">
+
+      <div class="settings-heading">
+        <h2>アカウント</h2>
+
+        <%= link_to edit_user_registration_path,
+              class: "settings-edit-link" do %>
+          ✎ 編集
+        <% end %>
+      </div>
+
+      <div class="settings-info-row">
+        <div class="settings-info-label">
+          メールアドレス
+        </div>
+
+        <div class="settings-info-value">
+          <%= @user.email %>
+        </div>
+      </div>
+
+      <div class="settings-info-row">
+        <div class="settings-info-label">
+          パスワード
+        </div>
+
+        <div class="settings-info-value">
+          *********
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

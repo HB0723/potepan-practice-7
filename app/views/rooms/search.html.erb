@@ -1,0 +1,85 @@
+<div class="room-search-area">
+  <%= form_with url: search_rooms_path, method: :get, class: "room-search-form" do |f| %>
+
+    <div class="room-search-field">
+      <%= f.select :area,
+        [
+          ["エリアを選択", ""],
+          ["東京", "東京"],
+          ["大阪", "大阪"],
+          ["京都", "京都"],
+          ["札幌", "札幌"]
+        ],
+        {},
+        class: "room-search-input"
+      %>
+    </div>
+
+    <div class="room-search-field">
+      <%= f.text_field :keyword,
+            placeholder: "キーワード名を入力",
+            class: "room-search-input" %>
+    </div>
+
+    <div>
+      <%= f.submit "検索", class: "room-search-submit" %>
+    </div>
+
+  <% end %>
+</div>
+
+
+<div class="room-search-results">
+
+  <p class="room-result-count">
+    <strong><%= @rooms.length %></strong> 件が見つかりました。
+  </p>
+
+  <div class="room-card-grid">
+
+    <% @rooms.each do |room| %>
+
+      <div class="room-card">
+
+        <div class="room-card-image">
+          <% if room.image.attached? %>
+            <%= image_tag room.image %>
+          <% else %>
+            <%= image_tag "default_room.png" %>
+          <% end %>
+        </div>
+
+        <div class="room-card-body">
+
+          <h3 class="room-card-title">
+            <%= room.name %>
+          </h3>
+
+          <p class="room-card-address">
+            <%= room.address %>
+          </p>
+
+          <p class="room-card-description">
+            <%= truncate(room.description, length: 80) %>
+          </p>
+
+          <div class="room-card-footer">
+
+            <p class="room-card-price">
+              ¥<%= number_with_delimiter(room.price) %>〜
+            </p>
+
+            <%= link_to "詳細はこちら",
+                  room_path(room),
+                  class: "room-detail-button" %>
+
+          </div>
+
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

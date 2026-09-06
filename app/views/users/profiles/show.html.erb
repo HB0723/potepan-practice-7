@@ -1,0 +1,59 @@
+<div class="settings-container">
+
+  <h1 class="settings-page-title">設定</h1>
+
+  <div class="settings-layout">
+
+    <%= render "users/settings_sidebar" %>
+
+    <div class="settings-main">
+
+      <div class="settings-heading">
+        <h2>プロフィール</h2>
+
+        <%= link_to users_profiles_edit_path,
+              class: "settings-edit-link" do %>
+          ✎ 編集
+        <% end %>
+      </div>
+
+      <div class="settings-info-row">
+        <div class="settings-info-label">
+          アイコン画像
+        </div>
+
+        <div class="settings-info-value">
+          <% if @user.icon.attached? %>
+            <%= image_tag @user.icon,
+                  class: "settings-profile-icon" %>
+          <% else %>
+            <%= image_tag "default_icon.png",
+                  class: "settings-profile-icon" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="settings-info-row">
+        <div class="settings-info-label">
+          名前
+        </div>
+
+        <div class="settings-info-value">
+          <%= @user.name %>
+        </div>
+      </div>
+
+      <div class="settings-info-row">
+        <div class="settings-info-label">
+          自己紹介
+        </div>
+
+        <div class="settings-info-value">
+          <%= @user.self_introduction %>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<%
+  nights = (@reservation.checkout_at - @reservation.checkin_at).to_i
+  total_price = nights * @room.price * @reservation.guest_count
+%>
+
+<div class="reservation-confirm-container">
+  <div class="reservation-confirm-card">
+
+    <h1 class="reservation-confirm-title">予約内容の確認</h1>
+
+    <div class="reservation-confirm-list">
+
+      <div class="reservation-confirm-row">
+        <p class="reservation-confirm-label">施設名</p>
+        <p class="reservation-confirm-value"><%= @room.name %></p>
+      </div>
+
+      <div class="reservation-confirm-row">
+        <p class="reservation-confirm-label">チェックイン</p>
+        <p class="reservation-confirm-value">
+          <%= @reservation.checkin_at.strftime("%Y/%m/%d") %>
+        </p>
+      </div>
+
+      <div class="reservation-confirm-row">
+        <p class="reservation-confirm-label">チェックアウト</p>
+        <p class="reservation-confirm-value">
+          <%= @reservation.checkout_at.strftime("%Y/%m/%d") %>
+        </p>
+      </div>
+
+      <div class="reservation-confirm-row">
+        <p class="reservation-confirm-label">日数</p>
+        <p class="reservation-confirm-value"><%= nights %>日</p>
+      </div>
+
+      <div class="reservation-confirm-row">
+        <p class="reservation-confirm-label">人数</p>
+        <p class="reservation-confirm-value"><%= @reservation.guest_count %>人</p>
+      </div>
+
+      <div class="reservation-confirm-row total-row">
+        <p class="reservation-confirm-label">お支払い金額</p>
+        <p class="reservation-confirm-value total-price">
+          ¥<%= number_with_delimiter(total_price) %>
+        </p>
+      </div>
+
+    </div>
+
+    <p class="reservation-confirm-message">
+      上記内容でよろしければ「確定」ボタンを押してください。
+    </p>
+
+    <%= form_with url: reservations_path, method: :post, data: { turbo: false } do %>
+      <%= hidden_field_tag :room_id, @room.id %>
+      <%= hidden_field_tag "reservation[checkin_at]", @reservation.checkin_at %>
+      <%= hidden_field_tag "reservation[checkout_at]", @reservation.checkout_at %>
+      <%= hidden_field_tag "reservation[guest_count]", @reservation.guest_count %>
+
+      <%= submit_tag "予約を確定", class: "reservation-confirm-submit" %>
+    <% end %>
+
+    <%= link_to "キャンセル", room_path(@room), class: "reservation-confirm-cancel" %>
+
+  </div>
+</div>

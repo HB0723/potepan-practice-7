@@ -1,0 +1,160 @@
+<div class="reservation-list-container">
+
+  <h1 class="reservation-list-title">予約済み一覧</h1>
+
+  <div class="reservation-table">
+
+    <div class="reservation-table-header">
+      <div>画像</div>
+      <div>施設名</div>
+      <div>紹介文</div>
+      <div>合計料金</div>
+      <div>チェックイン</div>
+      <div>チェックアウト</div>
+      <div>予約確定日時</div>
+      <div></div>
+    </div>
+
+
+    <% @reservations.each do |reservation| %>
+
+      <%
+        nights = (reservation.checkout_at - reservation.checkin_at).to_i
+        total_price =
+          nights *
+          reservation.room.price *
+          reservation.guest_count
+      %>
+
+      <div class="reservation-table-row">
+
+        <div class="reservation-list-image">
+          <% if reservation.room.image.attached? %>
+            <%= image_tag reservation.room.image %>
+          <% else %>
+            <%= image_tag "default_room.png" %>
+          <% end %>
+        </div>
+
+
+        <div class="reservation-list-name">
+          <%= link_to reservation.room.name,
+                room_path(reservation.room) %>
+        </div>
+
+
+        <div class="reservation-list-description">
+          <%= truncate(reservation.room.description, length: 70) %>
+        </div>
+
+
+        <div class="reservation-list-price">
+          ¥<%= number_with_delimiter(total_price) %>
+        </div>
+
+
+        <div>
+          <%= reservation.checkin_at.strftime("%Y/%m/%d") %>
+        </div>
+
+
+        <div>
+          <%= reservation.checkout_at.strftime("%Y/%m/%d") %>
+        </div>
+
+
+        <div>
+          <%= reservation.created_at.strftime("%Y/%m/%d %H:%M") %>
+        </div>
+
+
+        <div
+          class="reservation-action"
+          data-controller="reservation-menu delete-modal">
+
+          <button
+            type="button"
+            class="reservation-menu-button"
+            data-action="click->reservation-menu#toggle">
+            ⋮
+          </button>
+
+
+          <div
+            class="reservation-menu-dropdown"
+            data-reservation-menu-target="menu"
+            style="display: none;">
+
+            <%= link_to "再予約",
+                  room_path(reservation.room, reservation_id: reservation.id) %>
+
+            <button
+              type="button"
+              class="reservation-delete-link"
+              data-action="click->delete-modal#open">
+              予約を削除
+            </button>
+
+          </div>
+
+
+          <div
+            class="delete-modal"
+            data-delete-modal-target="modal"
+            style="display: none;">
+
+            <div class="delete-modal-content">
+
+              <h2>予約を削除しますか？</h2>
+
+              <% if reservation.room.image.attached? %>
+                <%= image_tag reservation.room.image,
+                      class: "delete-modal-image" %>
+              <% else %>
+                <%= image_tag "default_room.png",
+                      class: "delete-modal-image" %>
+              <% end %>
+
+              <h3><%= reservation.room.name %></h3>
+
+              <p>
+                <%= reservation.checkin_at.strftime("%Y/%m/%d") %>
+                〜
+                <%= reservation.checkout_at.strftime("%Y/%m/%d") %>
+              </p>
+
+              <p>
+                人数：<%= reservation.guest_count %>人
+              </p>
+
+              <p>
+                ¥<%= number_with_delimiter(total_price) %>
+              </p>
+
+              <div class="delete-modal-actions">
+
+                <%= button_to "予約を削除",
+                      delete_reservation_path(reservation),
+                      method: :delete,
+                      class: "delete-confirm-button" %>
+
+                <button
+                  type="button"
+                  class="delete-cancel-button"
+                  data-action="click->delete-modal#close">
+                  キャンセル
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
