@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   post "reservations/confirm", to: "reservations#confirm", as: :reservations_confirm
   post "reservations", to: "reservations#create", as: :reservations
+  get "reservations", to: "reservations#index", as: :reservations_index
+  get "reservations/:id", to: "reservations#show", as: :reservation
   get "reservations/complete", to: "reservations#complete", as: :reservation_complete
 
   devise_for :users, controllers: {

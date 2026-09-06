@@ -1,6 +1,10 @@
 class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @reservations = current_user.reservations.order(created_at: :desc)
+  end
+
   def new
     @room = Room.find(params[:room_id])
     @reservation = Reservation.new
@@ -28,6 +32,10 @@ class ReservationsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def show
+    @reservation = current_user.reservations.find(params[:id])
   end
 
   def complete

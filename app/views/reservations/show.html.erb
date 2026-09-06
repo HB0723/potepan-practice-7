@@ -1,0 +1,41 @@
+<h1>予約詳細</h1>
+
+<h2><%= @reservation.room.name %></h2>
+
+<% if @reservation.room.image.attached? %>
+  <%= image_tag @reservation.room.image, width: 300, height: 200 %>
+<% else %>
+  <%= image_tag "default_room.png", width: 300, height: 200 %>
+<% end %>
+
+<p>
+  チェックイン：
+  <%= @reservation.checkin_at.strftime("%Y/%m/%d") %>
+</p>
+
+<p>
+  チェックアウト：
+  <%= @reservation.checkout_at.strftime("%Y/%m/%d") %>
+</p>
+
+<p>
+  宿泊人数：
+  <%= @reservation.guest_count %>人
+</p>
+
+<%
+  nights = (@reservation.checkout_at - @reservation.checkin_at).to_i
+  total_price = nights * @reservation.room.price * @reservation.guest_count
+%>
+
+<p>
+  宿泊日数：
+  <%= nights %>泊
+</p>
+
+<p>
+  合計金額：
+  ¥<%= number_with_delimiter(total_price) %>
+</p>
+
+<%= link_to "予約一覧に戻る", reservations_index_path %>
