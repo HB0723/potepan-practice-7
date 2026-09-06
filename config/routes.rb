@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  post "reservations/confirm", to: "reservations#confirm", as: :reservations_confirm
+  post "reservations", to: "reservations#create", as: :reservations
+  get "reservations/complete", to: "reservations#complete", as: :reservation_complete
+
   devise_for :users, controllers: {
     registrations: "users/registrations"
   }
@@ -9,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   get "rooms/search", to: "rooms#search", as: :search_rooms
+  get "reservations/new", to: "reservations#new", as: :new_reservation
 
   resources :rooms
 

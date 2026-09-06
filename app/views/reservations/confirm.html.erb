@@ -1,0 +1,50 @@
+<h1>予約内容の確認</h1>
+
+<h2><%= @room.name %></h2>
+
+<% if @room.image.attached? %>
+  <%= image_tag @room.image, width: 300, height: 200 %>
+<% else %>
+  <%= image_tag "default_room.png", width: 300, height: 200 %>
+<% end %>
+
+<p>
+  チェックイン：
+  <%= @reservation.checkin_at.strftime("%Y/%m/%d") %>
+</p>
+
+<p>
+  チェックアウト：
+  <%= @reservation.checkout_at.strftime("%Y/%m/%d") %>
+</p>
+
+<p>
+  宿泊人数：
+  <%= @reservation.guest_count %>人
+</p>
+
+<%
+  nights = (@reservation.checkout_at - @reservation.checkin_at).to_i
+  total_price = nights * @room.price * @reservation.guest_count
+%>
+
+<p>
+  宿泊日数：
+  <%= nights %>泊
+</p>
+
+<p>
+  支払金額：
+  ¥<%= number_with_delimiter(total_price) %>
+</p>
+
+<%= form_with url: reservations_path, method: :post, data: { turbo: false } do %>
+  <%= hidden_field_tag :room_id, @room.id %>
+  <%= hidden_field_tag "reservation[checkin_at]", @reservation.checkin_at %>
+  <%= hidden_field_tag "reservation[checkout_at]", @reservation.checkout_at %>
+  <%= hidden_field_tag "reservation[guest_count]", @reservation.guest_count %>
+
+  <%= submit_tag "予約を確定する" %>
+<% end %>
+
+<%= link_to "予約内容を修正する", new_reservation_path(room_id: @room.id) %>
