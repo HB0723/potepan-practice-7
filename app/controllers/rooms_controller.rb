@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :authenticate_user!, except: [:search, :show]
+  before_action :authenticate_user!, except: [ :search, :show ]
 
   def index
     @rooms = current_user.rooms.order(created_at: :desc)
