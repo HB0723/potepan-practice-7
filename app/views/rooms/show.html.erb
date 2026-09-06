@@ -1,7 +1,7 @@
 <div class="room-show-container">
 
   <div class="room-show-back">
-    <%= link_to "← 戻る", search_rooms_path %>
+    <%= link_to "← 戻る", request.referer || root_path %>
   </div>
 
   <div class="room-show-layout">
